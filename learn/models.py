@@ -26,7 +26,7 @@ class Group(models.Model):
     name = models.CharField(max_length=255)
     min_users = models.IntegerField()
     max_users = models.IntegerField()
-    users = models.ManyToManyField(User, related_name='groups')
+    users = models.ManyToManyField(User, related_name='user_groups')
 
     def __str__(self):
         return self.name

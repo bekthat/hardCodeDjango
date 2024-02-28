@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'learn',
+    'rest_framework',
+    # 'learn',
+    'learn.apps.LearnConfig'
 ]
 
 MIDDLEWARE = [

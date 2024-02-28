@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Product(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=255)
@@ -10,6 +11,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class Lesson(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=255)
@@ -17,6 +19,7 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Group(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='groups')
@@ -27,6 +30,7 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Access(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accesses')

@@ -1,0 +1,30 @@
+{% extends 'learn/base.html' %}
+
+{% block title %}Список продуктов{% endblock %}
+
+{% block content %}
+    <h1>Список продуктов</h1>
+    <ul>
+        {% for product in products %}
+            <li onclick="toggleLessons({{ product.id }})">{{ product.name }} - {{ product.cost }} руб.</li>
+            <ul id="lessons-{{ product.id }}" style="display: none;">
+                {% for lesson in product.lessons.all %}
+                    <li>{{ lesson.title }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    function toggleLessons(productId) {
+        let lessonsList = document.getElementById("lessons-" + productId);
+        if (lessonsList.style.display === "none") {
+            lessonsList.style.display = "block";
+        } else {
+            lessonsList.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

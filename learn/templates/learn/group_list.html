@@ -1,0 +1,40 @@
+{% extends 'learn/base.html' %}
+
+{% block title %}Список групп{% endblock %}
+
+{% block content %}
+    <h1>Список групп</h1>
+    <ul>
+        {% for group in groups %}
+            <li onclick="toggleStudents({{ group.id }})" style="cursor: pointer;">{{ group.name }} - {{ group.product.name }}</li>
+            <ul id="students-{{ group.id }}" style="display: none;">
+                {% if group.student_users.exists %}
+                    {% for student in group.student_users %}
+                        <li>{{ student.username }} -
+                            {% for access in student.accesses.all %}
+                                {% if access.product == group.product %}
+                                    Доступ: {{ access.get_status_display }}
+                                {% endif %}
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>Пусто</li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    function toggleStudents(groupId) {
+        let studentsList = document.getElementById("students-" + groupId);
+        if (studentsList.style.display === "none") {
+            studentsList.style.display = "block";
+        } else {
+            studentsList.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

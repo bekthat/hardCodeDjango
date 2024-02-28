@@ -1,0 +1,33 @@
+{% extends 'learn/base.html' %}
+
+{% block title %}Список студентов{% endblock %}
+
+{% block content %}
+<h1>Список студентов</h1>
+<ul>
+    {% for student in students %}
+    <li onclick="toggleProducts('{{ student.username }}')">{{ student.username }}</li>
+    <ul id="products-{{ student.username }}" style="display: none;">
+        <p>Купленные продукты</p>
+        {% for access in student.accesses.all %}
+        <li>{{ access.product.name }}</li>
+        {% endfor %}
+    </ul>
+    {% empty %}
+    <li>Нет студентов</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    function toggleProducts(username) {
+        let productsList = document.getElementById("products-" + username);
+        if (productsList.style.display === "none") {
+            productsList.style.display = "block";
+        } else {
+            productsList.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

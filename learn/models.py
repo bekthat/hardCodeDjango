@@ -32,9 +32,22 @@ class Group(models.Model):
         return self.name
 
 
+# class Access(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accesses')
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='accesses')
+#
+#     def __str__(self):
+#         return f"{self.user} -> {self.product}"
+
 class Access(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = 'AC', 'Активен'
+        PENDING = 'PE', 'Ожидает'
+        EXPIRED = 'EX', 'Истек'
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accesses')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='accesses')
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.ACTIVE)
 
     def __str__(self):
-        return f"{self.user} -> {self.product}"
+        return f"{self.user} -> {self.product} ({self.get_status_display()})"

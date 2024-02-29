@@ -3,27 +3,36 @@
 {% block title %}Список групп{% endblock %}
 
 {% block content %}
-    <h1>Список групп</h1>
-    <ul>
-        {% for group in groups %}
-            <li onclick="toggleStudents({{ group.id }})" style="cursor: pointer;">{{ group.name }} - {{ group.product.name }}</li>
-            <ul id="students-{{ group.id }}" style="display: none;">
-                {% if group.student_users.exists %}
-                    {% for student in group.student_users %}
-                        <li>{{ student.username }} -
-                            {% for access in student.accesses.all %}
-                                {% if access.product == group.product %}
-                                    Доступ: {{ access.get_status_display }}
-                                {% endif %}
-                            {% endfor %}
-                        </li>
+<div class="container mt-4">
+    <h1 class="mb-4">Список групп</h1>
+    {% for group in groups %}
+    <div class="card mb-3">
+        <div class="card-header" onclick="toggleStudents({{ group.id }})" style="cursor: pointer;">
+            {{ group.name }} - {{ group.product.name }}
+        </div>
+        <ul id="students-{{ group.id }}" class="list-group list-group-flush" style="display: none;">
+            {% if group.student_users.exists %}
+                {% for student in group.student_users %}
+                <li class="list-group-item">
+                    {{ student.username }} -
+                    {% for access in student.accesses.all %}
+                        {% if access.product == group.product %}
+                            Доступ: {{ access.get_status_display }}
+                        {% endif %}
                     {% endfor %}
-                {% else %}
-                    <li>Пусто</li>
-                {% endif %}
-            </ul>
-        {% endfor %}
-    </ul>
+                </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">Пусто</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% empty %}
+    <div class="alert alert-info" role="alert">
+        Нет доступных групп.
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block javascript %}

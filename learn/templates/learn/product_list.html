@@ -3,17 +3,25 @@
 {% block title %}Список продуктов{% endblock %}
 
 {% block content %}
-    <h1>Список продуктов</h1>
-    <ul>
-        {% for product in products %}
-            <li onclick="toggleLessons({{ product.id }})">{{ product.name }} - {{ product.cost }} руб.</li>
-            <ul id="lessons-{{ product.id }}" style="display: none;">
-                {% for lesson in product.lessons.all %}
-                    <li>{{ lesson.title }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </ul>
+<div class="container mt-4">
+    <h1 class="mb-4">Список продуктов</h1>
+    {% for product in products %}
+    <div class="card mb-3">
+        <div class="card-header" onclick="toggleLessons({{ product.id }})" style="cursor: pointer;">
+            {{ product.name }} - {{ product.cost }} руб.
+        </div>
+        <ul id="lessons-{{ product.id }}" class="list-group list-group-flush" style="display: none;">
+            {% for lesson in product.lessons.all %}
+            <li class="list-group-item">{{ lesson.title }}</li>
+            {% empty %}
+            <li class="list-group-item">У этого продукта пока нет уроков.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% empty %}
+    <p class="text-center">Пока что нет доступных продуктов.</p>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block javascript %}

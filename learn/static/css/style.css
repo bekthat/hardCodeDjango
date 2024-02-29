@@ -1,0 +1,12 @@
+
+.welcome-section {
+    background: url('https://gas-kvas.com/uploads/posts/2023-02/1675427118_gas-kvas-com-p-fonovii-risunok-obucheniya-3.png') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0; /* Добавьте отступы, чтобы текст не был слишком близко к краям */
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+}
+.welcome-section__text {
+    margin-top: 190px;
+}

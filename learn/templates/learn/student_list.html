@@ -3,31 +3,37 @@
 {% block title %}Список студентов{% endblock %}
 
 {% block content %}
-<h1>Список студентов</h1>
-<ul>
+<div class="container mt-4">
+    <h1 class="mb-4">Список студентов</h1>
     {% for student in students %}
-    <li onclick="toggleProducts('{{ student.username }}')">{{ student.username }}</li>
-    <ul id="products-{{ student.username }}" style="display: none;">
-        <p>Купленные продукты</p>
-        {% for access in student.accesses.all %}
-        <li>{{ access.product.name }}</li>
-        {% endfor %}
-    </ul>
+    <div class="card mb-3">
+        <div class="card-header" onclick="toggleProducts('{{ student.username }}')" style="cursor: pointer;">
+            {{ student.username }}
+        </div>
+        <div id="products-{{ student.username }}" class="card-body" style="display: none;">
+            <h5 class="card-title">Купленные продукты:</h5>
+            <ul class="list-group list-group-flush">
+                {% for access in student.accesses.all %}
+                <li class="list-group-item">{{ access.product.name }}</li>
+                {% empty %}
+                <li class="list-group-item">Нет купленных продуктов</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
     {% empty %}
-    <li>Нет студентов</li>
+    <div class="alert alert-info" role="alert">
+        Нет студентов.
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
 
 {% block javascript %}
 <script>
     function toggleProducts(username) {
         let productsList = document.getElementById("products-" + username);
-        if (productsList.style.display === "none") {
-            productsList.style.display = "block";
-        } else {
-            productsList.style.display = "none";
-        }
+        productsList.style.display = productsList.style.display === "none" ? "block" : "none";
     }
 </script>
 {% endblock %}

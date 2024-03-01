@@ -1,6 +1,6 @@
 ## Для запуска проекта нужно сделать
 1. git clone https://github.com/bekthat/hardCodeDjango.git
-2. cd hardCodeDjangoAPI
+2. cd hardCodeDjango
 3. pip3 install -r requirements.txt
 4. python3 manage.py runserver 
     admin: bekzat

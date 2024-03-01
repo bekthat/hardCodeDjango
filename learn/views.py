@@ -30,7 +30,6 @@ def product_list(request):
 def group_list(request):
     groups = Group.objects.prefetch_related('users').all()
     for group in groups:
-        # Исключаем администраторов из списка пользователей каждой группы
         group.student_users = group.users.filter(is_superuser=False)
     return render(request, 'learn/group_list.html', {'groups': groups})
 
